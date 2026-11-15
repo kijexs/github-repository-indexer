@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package repopb;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "task2/proto/repopb";
+
+service RepositoryService {
+    rpc GetRepository(GetRepositoryRequest) returns (GetRepositoryReply) {}
+}
+
+message GetRepositoryRequest {
+    string owner = 1;
+    string repo = 2;
+}
+
+message GetRepositoryReply {
+    string name = 1;
+	string description = 2;
+	int64 stars_count = 3;
+	int64 forks_count = 4;
+	google.protobuf.Timestamp date_created = 5;
+}
