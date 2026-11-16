@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/kijexs/github-repository-indexer/collector/domain"
+	"github.com/kijexs/github-repository-indexer/internal/collector/domain"
 	"net/http"
 	"time"
 )

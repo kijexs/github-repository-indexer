@@ -2,7 +2,7 @@ package adapter
 
 import (
 	"context"
-	"github.com/kijexs/github-repository-indexer/gateway/domain"
+	"github.com/kijexs/github-repository-indexer/internal/gateway/domain"
 	"github.com/kijexs/github-repository-indexer/proto/repopb"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

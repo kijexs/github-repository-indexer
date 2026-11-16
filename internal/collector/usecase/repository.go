@@ -3,7 +3,7 @@ package usecase
 import (
 	"context"
 	"fmt"
-	"github.com/kijexs/github-repository-indexer/collector/domain"
+	"github.com/kijexs/github-repository-indexer/internal/collector/domain"
 )
 
 type RepositoryUseCase struct {

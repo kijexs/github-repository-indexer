@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/kijexs/github-repository-indexer/collector/adapter/github"
-	grpchandler "github.com/kijexs/github-repository-indexer/collector/handler/grpc"
-	"github.com/kijexs/github-repository-indexer/collector/usecase"
+	"github.com/kijexs/github-repository-indexer/internal/collector/adapter/github"
+	grpchandler "github.com/kijexs/github-repository-indexer/internal/collector/handler/grpc"
+	"github.com/kijexs/github-repository-indexer/internal/collector/usecase"
 	"github.com/kijexs/github-repository-indexer/proto/repopb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/grpclog"

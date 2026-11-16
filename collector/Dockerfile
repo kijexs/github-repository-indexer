@@ -7,7 +7,7 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 go build -o /collector ./collector/cmd/collector
+RUN CGO_ENABLED=0 go build -o /collector ./cmd/collector
 
 
 FROM alpine:latest
