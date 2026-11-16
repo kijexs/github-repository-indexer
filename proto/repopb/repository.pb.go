@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.12
 // 	protoc        v7.36.2
-// source: proto/repository.proto
+// source: proto/repopb/repository.proto
 
 package repopb
 
@@ -32,7 +32,7 @@ type GetRepositoryRequest struct {
 
 func (x *GetRepositoryRequest) Reset() {
 	*x = GetRepositoryRequest{}
-	mi := &file_proto_repository_proto_msgTypes[0]
+	mi := &file_proto_repopb_repository_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -44,7 +44,7 @@ func (x *GetRepositoryRequest) String() string {
 func (*GetRepositoryRequest) ProtoMessage() {}
 
 func (x *GetRepositoryRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_repository_proto_msgTypes[0]
+	mi := &file_proto_repopb_repository_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57,7 +57,7 @@ func (x *GetRepositoryRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRepositoryRequest.ProtoReflect.Descriptor instead.
 func (*GetRepositoryRequest) Descriptor() ([]byte, []int) {
-	return file_proto_repository_proto_rawDescGZIP(), []int{0}
+	return file_proto_repopb_repository_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *GetRepositoryRequest) GetOwner() string {
@@ -87,7 +87,7 @@ type GetRepositoryReply struct {
 
 func (x *GetRepositoryReply) Reset() {
 	*x = GetRepositoryReply{}
-	mi := &file_proto_repository_proto_msgTypes[1]
+	mi := &file_proto_repopb_repository_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -99,7 +99,7 @@ func (x *GetRepositoryReply) String() string {
 func (*GetRepositoryReply) ProtoMessage() {}
 
 func (x *GetRepositoryReply) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_repository_proto_msgTypes[1]
+	mi := &file_proto_repopb_repository_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -112,7 +112,7 @@ func (x *GetRepositoryReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetRepositoryReply.ProtoReflect.Descriptor instead.
 func (*GetRepositoryReply) Descriptor() ([]byte, []int) {
-	return file_proto_repository_proto_rawDescGZIP(), []int{1}
+	return file_proto_repopb_repository_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *GetRepositoryReply) GetName() string {
@@ -150,11 +150,167 @@ func (x *GetRepositoryReply) GetDateCreated() *timestamppb.Timestamp {
 	return nil
 }
 
-var File_proto_repository_proto protoreflect.FileDescriptor
+type LoadRepositoriesRequest struct {
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	Repositories  []*GetRepositoryRequest `protobuf:"bytes,1,rep,name=repositories,proto3" json:"repositories,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
 
-const file_proto_repository_proto_rawDesc = "" +
+func (x *LoadRepositoriesRequest) Reset() {
+	*x = LoadRepositoriesRequest{}
+	mi := &file_proto_repopb_repository_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LoadRepositoriesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoadRepositoriesRequest) ProtoMessage() {}
+
+func (x *LoadRepositoriesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_repopb_repository_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoadRepositoriesRequest.ProtoReflect.Descriptor instead.
+func (*LoadRepositoriesRequest) Descriptor() ([]byte, []int) {
+	return file_proto_repopb_repository_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *LoadRepositoriesRequest) GetRepositories() []*GetRepositoryRequest {
+	if x != nil {
+		return x.Repositories
+	}
+	return nil
+}
+
+type RepositoryResult struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Owner         string                 `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
+	Repo          string                 `protobuf:"bytes,2,opt,name=repo,proto3" json:"repo,omitempty"`
+	Data          *GetRepositoryReply    `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+	Error         string                 `protobuf:"bytes,4,opt,name=error,proto3" json:"error,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RepositoryResult) Reset() {
+	*x = RepositoryResult{}
+	mi := &file_proto_repopb_repository_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RepositoryResult) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RepositoryResult) ProtoMessage() {}
+
+func (x *RepositoryResult) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_repopb_repository_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RepositoryResult.ProtoReflect.Descriptor instead.
+func (*RepositoryResult) Descriptor() ([]byte, []int) {
+	return file_proto_repopb_repository_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *RepositoryResult) GetOwner() string {
+	if x != nil {
+		return x.Owner
+	}
+	return ""
+}
+
+func (x *RepositoryResult) GetRepo() string {
+	if x != nil {
+		return x.Repo
+	}
+	return ""
+}
+
+func (x *RepositoryResult) GetData() *GetRepositoryReply {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+func (x *RepositoryResult) GetError() string {
+	if x != nil {
+		return x.Error
+	}
+	return ""
+}
+
+type LoadRepositoriesReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Results       []*RepositoryResult    `protobuf:"bytes,1,rep,name=results,proto3" json:"results,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LoadRepositoriesReply) Reset() {
+	*x = LoadRepositoriesReply{}
+	mi := &file_proto_repopb_repository_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LoadRepositoriesReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoadRepositoriesReply) ProtoMessage() {}
+
+func (x *LoadRepositoriesReply) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_repopb_repository_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoadRepositoriesReply.ProtoReflect.Descriptor instead.
+func (*LoadRepositoriesReply) Descriptor() ([]byte, []int) {
+	return file_proto_repopb_repository_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *LoadRepositoriesReply) GetResults() []*RepositoryResult {
+	if x != nil {
+		return x.Results
+	}
+	return nil
+}
+
+var File_proto_repopb_repository_proto protoreflect.FileDescriptor
+
+const file_proto_repopb_repository_proto_rawDesc = "" +
 	"\n" +
-	"\x16proto/repository.proto\x12\x05task2\x1a\x1fgoogle/protobuf/timestamp.proto\"@\n" +
+	"\x1dproto/repopb/repository.proto\x12\x06repopb\x1a\x1fgoogle/protobuf/timestamp.proto\"@\n" +
 	"\x14GetRepositoryRequest\x12\x14\n" +
 	"\x05owner\x18\x01 \x01(\tR\x05owner\x12\x12\n" +
 	"\x04repo\x18\x02 \x01(\tR\x04repo\"\xcb\x01\n" +
@@ -165,59 +321,77 @@ const file_proto_repository_proto_rawDesc = "" +
 	"starsCount\x12\x1f\n" +
 	"\vforks_count\x18\x04 \x01(\x03R\n" +
 	"forksCount\x12=\n" +
-	"\fdate_created\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\vdateCreated2^\n" +
-	"\x11RepositoryService\x12I\n" +
-	"\rGetRepository\x12\x1b.task2.GetRepositoryRequest\x1a\x19.task2.GetRepositoryReply\"\x00B\x14Z\x12task2/proto/repopbb\x06proto3"
+	"\fdate_created\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\vdateCreated\"[\n" +
+	"\x17LoadRepositoriesRequest\x12@\n" +
+	"\frepositories\x18\x01 \x03(\v2\x1c.repopb.GetRepositoryRequestR\frepositories\"\x82\x01\n" +
+	"\x10RepositoryResult\x12\x14\n" +
+	"\x05owner\x18\x01 \x01(\tR\x05owner\x12\x12\n" +
+	"\x04repo\x18\x02 \x01(\tR\x04repo\x12.\n" +
+	"\x04data\x18\x03 \x01(\v2\x1a.repopb.GetRepositoryReplyR\x04data\x12\x14\n" +
+	"\x05error\x18\x04 \x01(\tR\x05error\"K\n" +
+	"\x15LoadRepositoriesReply\x122\n" +
+	"\aresults\x18\x01 \x03(\v2\x18.repopb.RepositoryResultR\aresults2\xb6\x01\n" +
+	"\x11RepositoryService\x12T\n" +
+	"\x10LoadRepositories\x12\x1f.repopb.LoadRepositoriesRequest\x1a\x1d.repopb.LoadRepositoriesReply\"\x00\x12K\n" +
+	"\rGetRepository\x12\x1c.repopb.GetRepositoryRequest\x1a\x1a.repopb.GetRepositoryReply\"\x00B:Z8github.com/kijexs/github-repository-indexer/proto/repopbb\x06proto3"
 
 var (
-	file_proto_repository_proto_rawDescOnce sync.Once
-	file_proto_repository_proto_rawDescData []byte
+	file_proto_repopb_repository_proto_rawDescOnce sync.Once
+	file_proto_repopb_repository_proto_rawDescData []byte
 )
 
-func file_proto_repository_proto_rawDescGZIP() []byte {
-	file_proto_repository_proto_rawDescOnce.Do(func() {
-		file_proto_repository_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_proto_repository_proto_rawDesc), len(file_proto_repository_proto_rawDesc)))
+func file_proto_repopb_repository_proto_rawDescGZIP() []byte {
+	file_proto_repopb_repository_proto_rawDescOnce.Do(func() {
+		file_proto_repopb_repository_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_proto_repopb_repository_proto_rawDesc), len(file_proto_repopb_repository_proto_rawDesc)))
 	})
-	return file_proto_repository_proto_rawDescData
+	return file_proto_repopb_repository_proto_rawDescData
 }
 
-var file_proto_repository_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
-var file_proto_repository_proto_goTypes = []any{
-	(*GetRepositoryRequest)(nil),  // 0: task2.GetRepositoryRequest
-	(*GetRepositoryReply)(nil),    // 1: task2.GetRepositoryReply
-	(*timestamppb.Timestamp)(nil), // 2: google.protobuf.Timestamp
+var file_proto_repopb_repository_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_proto_repopb_repository_proto_goTypes = []any{
+	(*GetRepositoryRequest)(nil),    // 0: repopb.GetRepositoryRequest
+	(*GetRepositoryReply)(nil),      // 1: repopb.GetRepositoryReply
+	(*LoadRepositoriesRequest)(nil), // 2: repopb.LoadRepositoriesRequest
+	(*RepositoryResult)(nil),        // 3: repopb.RepositoryResult
+	(*LoadRepositoriesReply)(nil),   // 4: repopb.LoadRepositoriesReply
+	(*timestamppb.Timestamp)(nil),   // 5: google.protobuf.Timestamp
 }
-var file_proto_repository_proto_depIdxs = []int32{
-	2, // 0: task2.GetRepositoryReply.date_created:type_name -> google.protobuf.Timestamp
-	0, // 1: task2.RepositoryService.GetRepository:input_type -> task2.GetRepositoryRequest
-	1, // 2: task2.RepositoryService.GetRepository:output_type -> task2.GetRepositoryReply
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+var file_proto_repopb_repository_proto_depIdxs = []int32{
+	5, // 0: repopb.GetRepositoryReply.date_created:type_name -> google.protobuf.Timestamp
+	0, // 1: repopb.LoadRepositoriesRequest.repositories:type_name -> repopb.GetRepositoryRequest
+	1, // 2: repopb.RepositoryResult.data:type_name -> repopb.GetRepositoryReply
+	3, // 3: repopb.LoadRepositoriesReply.results:type_name -> repopb.RepositoryResult
+	2, // 4: repopb.RepositoryService.LoadRepositories:input_type -> repopb.LoadRepositoriesRequest
+	0, // 5: repopb.RepositoryService.GetRepository:input_type -> repopb.GetRepositoryRequest
+	4, // 6: repopb.RepositoryService.LoadRepositories:output_type -> repopb.LoadRepositoriesReply
+	1, // 7: repopb.RepositoryService.GetRepository:output_type -> repopb.GetRepositoryReply
+	6, // [6:8] is the sub-list for method output_type
+	4, // [4:6] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
-func init() { file_proto_repository_proto_init() }
-func file_proto_repository_proto_init() {
-	if File_proto_repository_proto != nil {
+func init() { file_proto_repopb_repository_proto_init() }
+func file_proto_repopb_repository_proto_init() {
+	if File_proto_repopb_repository_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_repository_proto_rawDesc), len(file_proto_repository_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_repopb_repository_proto_rawDesc), len(file_proto_repopb_repository_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_proto_repository_proto_goTypes,
-		DependencyIndexes: file_proto_repository_proto_depIdxs,
-		MessageInfos:      file_proto_repository_proto_msgTypes,
+		GoTypes:           file_proto_repopb_repository_proto_goTypes,
+		DependencyIndexes: file_proto_repopb_repository_proto_depIdxs,
+		MessageInfos:      file_proto_repopb_repository_proto_msgTypes,
 	}.Build()
-	File_proto_repository_proto = out.File
-	file_proto_repository_proto_goTypes = nil
-	file_proto_repository_proto_depIdxs = nil
+	File_proto_repopb_repository_proto = out.File
+	file_proto_repopb_repository_proto_goTypes = nil
+	file_proto_repopb_repository_proto_depIdxs = nil
 }

@@ -1,5 +1,26 @@
 basePath: /
 definitions:
+  handler.JsonLoadRequest:
+    properties:
+      repositories:
+        items:
+          $ref: '#/definitions/handler.JsonRepositoryRequest'
+        type: array
+    type: object
+  handler.JsonLoadResponse:
+    properties:
+      results:
+        items:
+          $ref: '#/definitions/handler.JsonRepositoryResult'
+        type: array
+    type: object
+  handler.JsonRepositoryRequest:
+    properties:
+      owner:
+        type: string
+      repo:
+        type: string
+    type: object
   handler.JsonRepositoryResponse:
     properties:
       created_at:
@@ -13,6 +34,17 @@ definitions:
       stargazers_count:
         type: integer
     type: object
+  handler.JsonRepositoryResult:
+    properties:
+      data:
+        $ref: '#/definitions/handler.JsonRepositoryResponse'
+      error:
+        type: string
+      owner:
+        type: string
+      repo:
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact: {}
@@ -20,6 +52,47 @@ info:
   title: Repository API
   version: "1.0"
 paths:
+  /repositories:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Repositories to load
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handler.JsonLoadRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.JsonLoadResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "408":
+          description: Request Timeout
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+        "503":
+          description: Service Unavailable
+          schema:
+            type: string
+        "504":
+          description: Gateway Timeout
+          schema:
+            type: string
+      summary: Load repositories from GitHub and update saved data
+      tags:
+      - repositories
   /repositories/{owner}/{repo}:
     get:
       description: Returns information about a GitHub repository
@@ -55,6 +128,10 @@ paths:
             type: string
         "503":
           description: Service Unavailable
+          schema:
+            type: string
+        "504":
+          description: Gateway Timeout
           schema:
             type: string
       summary: Get repository information

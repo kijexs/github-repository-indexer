@@ -1,13 +1,10 @@
 package domain
 
-import (
-	"context"
-	"time"
-)
+import "time"
 
 type RepositoryRequest struct {
-	Owner string
-	Repo  string
+	Owner string `json:"owner"`
+	Repo  string `json:"repo"`
 }
 
 type RepositoryInfo struct {
@@ -18,6 +15,8 @@ type RepositoryInfo struct {
 	DateCreated time.Time
 }
 
-type RepositoryProvider interface {
-	GetRepository(ctx context.Context, req RepositoryRequest) (RepositoryInfo, error)
+type Result struct {
+	Request RepositoryRequest
+	Data    RepositoryInfo
+	Err     error
 }
