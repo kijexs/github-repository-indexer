@@ -2,9 +2,9 @@ package main
 
 import (
 	_ "github.com/kijexs/github-repository-indexer/docs"
-	"github.com/kijexs/github-repository-indexer/gateway/adapter"
-	"github.com/kijexs/github-repository-indexer/gateway/handler"
-	"github.com/kijexs/github-repository-indexer/gateway/usecase"
+	"github.com/kijexs/github-repository-indexer/internal/gateway/adapter"
+	"github.com/kijexs/github-repository-indexer/internal/gateway/handler"
+	"github.com/kijexs/github-repository-indexer/internal/gateway/usecase"
 	"github.com/kijexs/github-repository-indexer/proto/repopb"
 	httpSwagger "github.com/swaggo/http-swagger/v2"
 	"google.golang.org/grpc"

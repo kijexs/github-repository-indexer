@@ -3,8 +3,8 @@ package handler
 import (
 	"encoding/json"
 	"errors"
-	"github.com/kijexs/github-repository-indexer/gateway/domain"
-	"github.com/kijexs/github-repository-indexer/gateway/usecase"
+	"github.com/kijexs/github-repository-indexer/internal/gateway/domain"
+	"github.com/kijexs/github-repository-indexer/internal/gateway/usecase"
 	"net/http"
 	"time"
 )

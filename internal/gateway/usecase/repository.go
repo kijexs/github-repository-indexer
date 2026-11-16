@@ -3,7 +3,7 @@ package usecase
 import (
 	"context"
 	"fmt"
-	"github.com/kijexs/github-repository-indexer/gateway/domain"
+	"github.com/kijexs/github-repository-indexer/internal/gateway/domain"
 )
 
 type GatewayUseCase struct {
