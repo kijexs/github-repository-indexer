@@ -10,7 +10,9 @@ COPY . .
 RUN CGO_ENABLED=0 go build -o /gateway ./cmd/gateway
 
 
-FROM alpine:latest
+FROM alpine:3.23
+
+RUN apk add --no-cache ca-certificates
 
 COPY --from=builder /gateway /gateway
 
