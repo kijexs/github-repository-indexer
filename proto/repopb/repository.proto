@@ -4,9 +4,10 @@ package repopb;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "task2/proto/repopb";
+option go_package = "github.com/kijexs/github-repository-indexer/proto/repopb";
 
 service RepositoryService {
+    rpc LoadRepositories(LoadRepositoriesRequest) returns (LoadRepositoriesReply) {}
     rpc GetRepository(GetRepositoryRequest) returns (GetRepositoryReply) {}
 }
 
@@ -21,4 +22,19 @@ message GetRepositoryReply {
 	int64 stars_count = 3;
 	int64 forks_count = 4;
 	google.protobuf.Timestamp date_created = 5;
+}
+
+message LoadRepositoriesRequest {
+ repeated GetRepositoryRequest repositories = 1;
+}
+
+message RepositoryResult {
+ string owner = 1;
+ string repo = 2;
+ GetRepositoryReply data = 3;
+ string error = 4;
+}
+
+message LoadRepositoriesReply {
+ repeated RepositoryResult results = 1;
 }

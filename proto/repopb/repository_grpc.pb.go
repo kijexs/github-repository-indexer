@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.6.2
 // - protoc             v7.36.2
-// source: proto/repository.proto
+// source: proto/repopb/repository.proto
 
 package repopb
 
@@ -19,13 +19,15 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	RepositoryService_GetRepository_FullMethodName = "/task2.RepositoryService/GetRepository"
+	RepositoryService_LoadRepositories_FullMethodName = "/repopb.RepositoryService/LoadRepositories"
+	RepositoryService_GetRepository_FullMethodName    = "/repopb.RepositoryService/GetRepository"
 )
 
 // RepositoryServiceClient is the client API for RepositoryService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RepositoryServiceClient interface {
+	LoadRepositories(ctx context.Context, in *LoadRepositoriesRequest, opts ...grpc.CallOption) (*LoadRepositoriesReply, error)
 	GetRepository(ctx context.Context, in *GetRepositoryRequest, opts ...grpc.CallOption) (*GetRepositoryReply, error)
 }
 
@@ -35,6 +37,16 @@ type repositoryServiceClient struct {
 
 func NewRepositoryServiceClient(cc grpc.ClientConnInterface) RepositoryServiceClient {
 	return &repositoryServiceClient{cc}
+}
+
+func (c *repositoryServiceClient) LoadRepositories(ctx context.Context, in *LoadRepositoriesRequest, opts ...grpc.CallOption) (*LoadRepositoriesReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LoadRepositoriesReply)
+	err := c.cc.Invoke(ctx, RepositoryService_LoadRepositories_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *repositoryServiceClient) GetRepository(ctx context.Context, in *GetRepositoryRequest, opts ...grpc.CallOption) (*GetRepositoryReply, error) {
@@ -51,6 +63,7 @@ func (c *repositoryServiceClient) GetRepository(ctx context.Context, in *GetRepo
 // All implementations must embed UnimplementedRepositoryServiceServer
 // for forward compatibility.
 type RepositoryServiceServer interface {
+	LoadRepositories(context.Context, *LoadRepositoriesRequest) (*LoadRepositoriesReply, error)
 	GetRepository(context.Context, *GetRepositoryRequest) (*GetRepositoryReply, error)
 	mustEmbedUnimplementedRepositoryServiceServer()
 }
@@ -62,6 +75,9 @@ type RepositoryServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedRepositoryServiceServer struct{}
 
+func (UnimplementedRepositoryServiceServer) LoadRepositories(context.Context, *LoadRepositoriesRequest) (*LoadRepositoriesReply, error) {
+	return nil, status.Error(codes.Unimplemented, "method LoadRepositories not implemented")
+}
 func (UnimplementedRepositoryServiceServer) GetRepository(context.Context, *GetRepositoryRequest) (*GetRepositoryReply, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetRepository not implemented")
 }
@@ -86,6 +102,24 @@ func RegisterRepositoryServiceServer(s grpc.ServiceRegistrar, srv RepositoryServ
 	s.RegisterService(&RepositoryService_ServiceDesc, srv)
 }
 
+func _RepositoryService_LoadRepositories_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LoadRepositoriesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RepositoryServiceServer).LoadRepositories(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RepositoryService_LoadRepositories_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RepositoryServiceServer).LoadRepositories(ctx, req.(*LoadRepositoriesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _RepositoryService_GetRepository_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetRepositoryRequest)
 	if err := dec(in); err != nil {
@@ -108,14 +142,18 @@ func _RepositoryService_GetRepository_Handler(srv interface{}, ctx context.Conte
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var RepositoryService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "task2.RepositoryService",
+	ServiceName: "repopb.RepositoryService",
 	HandlerType: (*RepositoryServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "LoadRepositories",
+			Handler:    _RepositoryService_LoadRepositories_Handler,
+		},
 		{
 			MethodName: "GetRepository",
 			Handler:    _RepositoryService_GetRepository_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/repository.proto",
+	Metadata: "proto/repopb/repository.proto",
 }

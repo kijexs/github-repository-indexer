@@ -3,6 +3,7 @@ package github
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/kijexs/github-repository-indexer/internal/collector/domain"
 	"net/http"
@@ -53,6 +54,9 @@ func (a *GitHubAdapter) GetRepository(ctx context.Context, request domain.Reposi
 
 	res, err := a.httpClient.Do(req)
 	if err != nil {
+		if errors.Is(err, context.Canceled) || errors.Is(err, context.DeadlineExceeded) {
+			return domain.RepositoryInfo{}, fmt.Errorf("github request: %w", err)
+		}
 		return domain.RepositoryInfo{}, fmt.Errorf(
 			"%w: github request failed: %v",
 			domain.ErrUpstreamUnavailable,
@@ -60,9 +64,6 @@ func (a *GitHubAdapter) GetRepository(ctx context.Context, request domain.Reposi
 		)
 	}
 	defer res.Body.Close()
-	if res.StatusCode != http.StatusOK {
-		return repoInfo, fmt.Errorf("unexpected status: got %v", res.StatusCode)
-	}
 
 	switch {
 	case res.StatusCode == http.StatusOK:
@@ -70,16 +71,19 @@ func (a *GitHubAdapter) GetRepository(ctx context.Context, request domain.Reposi
 	case res.StatusCode == http.StatusNotFound:
 		return repoInfo, domain.ErrRepositoryNotFound
 
-	case res.StatusCode >= 500 && res.StatusCode <= 599:
+	case res.StatusCode >= 500 || res.StatusCode == http.StatusForbidden || res.StatusCode == http.StatusTooManyRequests:
 		return repoInfo, domain.ErrUpstreamUnavailable
 
 	default:
-		return repoInfo, domain.ErrInternal
+		return repoInfo, fmt.Errorf("%w: github status %d", domain.ErrUpstreamUnavailable, res.StatusCode)
 	}
 
 	err = json.NewDecoder(res.Body).Decode(&githubRepoInfo)
 	if err != nil {
-		return repoInfo, domain.ErrInternal
+		if errors.Is(err, context.Canceled) || errors.Is(err, context.DeadlineExceeded) {
+			return repoInfo, fmt.Errorf("decode github response: %w", err)
+		}
+		return repoInfo, fmt.Errorf("%w: decode github response: %v", domain.ErrInternal, err)
 	}
 
 	githubResponseToRepositoryInfo(&githubRepoInfo, &repoInfo)
